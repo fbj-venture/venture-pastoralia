@@ -1,6 +1,8 @@
 import { serve } from '@hono/node-server'
 import { serveStatic } from '@hono/node-server/serve-static'
 import { Hono } from 'hono'
+import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const app = new Hono()
 
@@ -10,7 +12,8 @@ api.get('/health', (c) => c.json({ status: 'ok' }))
 app.route('/api', api)
 
 if (process.env['NODE_ENV'] === 'production') {
-  const root = process.env['STATIC_DIR'] ?? './apps/web/dist'
+  const root = process.env['STATIC_DIR'] ?? join(fileURLToPath(new URL('.', import.meta.url)), '../../web/dist')
+  console.log(`Root: ${root}`)
   app.use('/*', serveStatic({ root }))
 }
 

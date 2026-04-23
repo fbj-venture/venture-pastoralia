@@ -7,13 +7,20 @@
   },
   "scripts": {
     "dev": "nx run-many --target=dev --all --parallel",
-    "build": "nx run-many --target=build --all"
+    "build": "nx run-many --target=build --all",
+    "start": "node apps/api/dist/index.js",
+    "preview": "cross-env NODE_ENV=production pnpm run start"
   },
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "nx": "^20.8.0",
     "typescript": "^5.7.3"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["esbuild", "nx", "lightningcss"]
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "nx",
+      "lightningcss"
+    ]
   }
 }
