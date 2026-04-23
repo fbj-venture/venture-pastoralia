@@ -25,9 +25,32 @@ Supabase is used for all of the following:
 - **Generated TypeScript types** — via Supabase CLI for end-to-end type safety
 - **Migrations** — managed exclusively through the Supabase CLI
 
-### No Prisma
+### Kysely as Query Builder
 
-Prisma was considered but rejected because it bypasses Supabase RLS by connecting directly to Postgres as a superuser. Given the sensitivity of pastoral data, RLS being native and automatic through the Supabase JS client is non-negotiable.
+Kysely is used server-side in Hono for all database queries. It was chosen over Prisma because Prisma bypasses Supabase RLS by connecting as a superuser. Kysely preserves RLS through a session helper that wraps every query in a transaction and sets the authenticated user context before execution.
+
+The `kysely-supabase` package bridges Supabase's generated TypeScript types into Kysely's type system via `KyselifyDatabase`. The workflow is:
+
+1. Supabase CLI generates `database.types.ts` from the live schema
+2. `KyselifyDatabase` translates those types into Kysely's interface
+3. Kysely queries are fully typed against the actual database schema
+
+All database access is server-side only. The frontend never touches the database directly.
+
+### RLS Session Helper
+
+Every Kysely query must be wrapped in the RLS session helper defined in `packages/db`. This helper:
+
+1. Opens a transaction
+2. Sets `SET LOCAL role = authenticated` and the user's JWT claims
+3. Executes the query with RLS policies active
+4. Commits or rolls back
+
+This is the critical piece that makes Kysely + RLS work. It must never be bypassed.
+
+### LightningCSS
+
+LightningCSS is used as the CSS processor in Vite on the frontend. No PostCSS, no Tailwind, no CSS-in-JS. LightningCSS handles modern CSS features, nesting, and vendor prefixing natively at build time.
 
 ### Monorepo — PNPM + Nx
 

@@ -1,0 +1,19 @@
+{
+  "name": "venture-pastoralia",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "dev": "nx run-many --target=dev --all --parallel",
+    "build": "nx run-many --target=build --all"
+  },
+  "devDependencies": {
+    "nx": "^20.8.0",
+    "typescript": "^5.7.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild", "nx", "lightningcss"]
+  }
+}

@@ -44,3 +44,7 @@ Thumbs.db
 
 # Railway
 .railway/
+
+.nx/polygraph
+.claude/worktrees
+.claude/settings.local.json

@@ -4,7 +4,8 @@
 
 - Pastoral data is highly sensitive and confidential
 - RLS is the primary security enforcement layer — application-level checks are secondary
-- All database access goes through the Supabase JS client — never direct Postgres connections, which would bypass RLS
+- All database access goes through Kysely on the server, always wrapped in the RLS session helper — this is non-negotiable
+- The RLS session helper in `packages/db` must be used for every query without exception — never bypass it
 - All user management operations are server-side only via Hono — never triggered directly from the client
 - No user can self-register under any circumstances
 
