@@ -22,7 +22,7 @@ management.
 - [x] Monorepo scaffold — PNPM workspaces + Nx, `apps/web`, `apps/api`,
   `packages/db`, `packages/shared`
 - [x] Supabase project setup — local dev with Supabase CLI
-- [ ] Supabase Auth configured — public registration disabled
+- [~] Supabase Auth configured — public registration disabled
 - [ ] `profiles` table and migration
 - [ ] Supabase Auth trigger — auto-creates `profiles` record on invite
   acceptance

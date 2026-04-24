@@ -1,5 +1,6 @@
 {
    "name": "@venture-pastoralia/api",
+   "description": "The Hono API server for Venture Pastoralia",
    "private": true,
    "type": "module",
    "scripts": {
@@ -10,7 +11,7 @@
    "dependencies": {
       "@hono/node-server": "^1.13.0",
       "hono": "^4.7.0",
-      "inertia-ts": "^0.4.0"
+      "inertia-ts": "^0.5.1"
    },
    "devDependencies": {
       "@types/node": "^24.0.0",
