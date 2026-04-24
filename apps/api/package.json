@@ -1,21 +1,21 @@
 {
-  "name": "@venture-pastoralia/api",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "dev": "node --watch --import tsx/esm src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js"
-  },
-  "dependencies": {
-    "@hono/node-server": "^1.13.0",
-    "hono": "^4.7.0",
-    "inertia-ts": "file:/Projects/npm-local/inertia-ts-0.4.0.tgz"
-  },
-  "devDependencies": {
-    "dotenv": "^17.4.2",
-    "@types/node": "^24.0.0",
-    "tsx": "^4.19.0",
-    "typescript": "^5.7.3"
-  }
+   "name": "@venture-pastoralia/api",
+   "private": true,
+   "type": "module",
+   "scripts": {
+      "dev": "node --watch --import tsx/esm src/index.ts",
+      "build": "tsc",
+      "start": "node dist/index.js"
+   },
+   "dependencies": {
+      "@hono/node-server": "^1.13.0",
+      "hono": "^4.7.0",
+      "inertia-ts": "^0.4.0"
+   },
+   "devDependencies": {
+      "@types/node": "^24.0.0",
+      "dotenv": "^17.4.2",
+      "tsx": "^4.19.0",
+      "typescript": "^5.7.3"
+   }
 }

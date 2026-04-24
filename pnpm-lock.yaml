@@ -23,19 +23,19 @@ importers:
       '@hono/node-server':
         specifier: ^1.13.0
         version: 1.19.14(hono@4.12.14)
-      dotenv:
-        specifier: ^17.4.2
-        version: 17.4.2
       hono:
         specifier: ^4.7.0
         version: 4.12.14
       inertia-ts:
-        specifier: file:/Projects/npm-local/inertia-ts-0.4.0.tgz
-        version: file:../../npm-local/inertia-ts-0.4.0.tgz
+        specifier: ^0.4.0
+        version: 0.4.0
     devDependencies:
       '@types/node':
         specifier: ^24.0.0
         version: 24.12.2
+      dotenv:
+        specifier: ^17.4.2
+        version: 17.4.2
       tsx:
         specifier: ^4.19.0
         version: 4.21.0
@@ -1115,9 +1115,8 @@ packages:
     resolution: {integrity: sha512-hsBTNUqQTDwkWtcdYI2i06Y/nUBEsNEDJKjWdigLvegy8kDuJAS8uRlpkkcQpyEXL0Z/pjDy5HBmMjRCJ2gq+g==}
     engines: {node: '>= 4'}
 
-  inertia-ts@file:../../npm-local/inertia-ts-0.4.0.tgz:
-    resolution: {integrity: sha512-jgaYIeQ/jLCyNpwrjicyZh6RRJLf9XA1M1AyxA15W7f+k5uJcqYDSlwTxXIQUwbTuiV1hKqN39tIrQDXfZRhiw==, tarball: file:../../npm-local/inertia-ts-0.4.0.tgz}
-    version: 0.4.0
+  inertia-ts@0.4.0:
+    resolution: {integrity: sha512-igiAPu18WxgSpNLeBJdteMqDbfgr4RxAMGjclKAgxJDrZP8qhMCicmbUO3KhyR77KoiEmgWdJ7llYPMscuXhFw==}
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -2437,7 +2436,7 @@ snapshots:
 
   ignore@5.3.2: {}
 
-  inertia-ts@file:../../npm-local/inertia-ts-0.4.0.tgz: {}
+  inertia-ts@0.4.0: {}
 
   inherits@2.0.4: {}
 
