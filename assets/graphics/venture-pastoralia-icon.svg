@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FDF6EC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F5E6CC;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="crookGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C17B2F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A0522D;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="peopleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8A838;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C17B2F;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4633A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B84C2A;stop-opacity:1" />
+    </linearGradient>
+    <filter id="softShadow">
+      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#A0522D" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- Background with rounded corners for app icon use -->
+  <rect width="100" height="100" rx="20" fill="url(#bgGrad)"/>
+
+  <!-- Subtle warm inner border -->
+  <rect width="100" height="100" rx="20" fill="none" stroke="#E8A838" stroke-width="1.5" opacity="0.3"/>
+
+  <!-- ═══ ICON MARK — centred in square ═══ -->
+  <g transform="translate(18, 8)" filter="url(#softShadow)">
+
+    <!-- Vertical staff -->
+    <rect x="27" y="28" width="5.5" height="58" rx="2.75" fill="url(#crookGrad)"/>
+
+    <!-- Crook curve — top hook -->
+    <path d="M 32 40 Q 32 16 47 16 Q 62 16 62 30 Q 62 40 52 44 Q 45 46 42 42"
+          fill="none"
+          stroke="url(#crookGrad)"
+          stroke-width="5.5"
+          stroke-linecap="round"/>
+
+    <!-- Person 1 (left) -->
+    <circle cx="12" cy="68" r="7.5" fill="url(#peopleGrad)" opacity="0.75"/>
+    <rect x="7" y="75" width="10" height="12" rx="5" fill="url(#peopleGrad)" opacity="0.75"/>
+
+    <!-- Person 2 (centre, front) -->
+    <circle cx="30" cy="63" r="9" fill="url(#accentGrad)"/>
+    <rect x="23" y="72" width="14" height="14" rx="7" fill="url(#accentGrad)"/>
+
+    <!-- Person 3 (right) -->
+    <circle cx="49" cy="68" r="7.5" fill="url(#peopleGrad)" opacity="0.75"/>
+    <rect x="44" y="75" width="10" height="12" rx="5" fill="url(#peopleGrad)" opacity="0.75"/>
+
+    <!-- Connecting arc beneath community -->
+    <path d="M 6 89 Q 30 96 54 89"
+          fill="none"
+          stroke="#E8A838"
+          stroke-width="2"
+          stroke-linecap="round"
+          opacity="0.45"/>
+  </g>
+</svg>

@@ -1,4 +1,6 @@
-import { useState } from 'preact/hooks'
+import { useState, useEffect } from 'preact/hooks'
+import { useLocation } from 'preact-iso'
+import { api } from './lib/api'
 
 const FOLLOW_UPS = [
   { id: 1, name: 'Margaret Chen', reason: 'Hospital follow-up', due: 'Today', urgent: true },
@@ -271,7 +273,21 @@ function RecentVisitsPanel() {
 // ── Dashboard page ───────────────────────────────────────
 
 export function Dashboard() {
+  const { route } = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [checked, setChecked] = useState(false)
+
+  useEffect(() => {
+    api.api.auth.me.$get()
+      .then(res => res.json())
+      .then(data => {
+        if (!data.user) route('/')
+        else setChecked(true)
+      })
+      .catch(() => route('/'))
+  }, [])
+
+  if (!checked) return null
 
   return (
     <div class="layout">

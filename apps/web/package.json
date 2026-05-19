@@ -3,13 +3,15 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "hono": "^4.12.14",
     "preact": "^10.25.0",
-    "preact-iso": "^2.11.1"
+    "preact-iso": "^2.11.1",
+    "vite-plugin-qrcode": "^0.4.1"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.9.0",

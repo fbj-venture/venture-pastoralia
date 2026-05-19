@@ -1,8 +1,6 @@
 # Build Layers
 
-Each layer is production-quality and independently usable before the next layer
-begins. No layer is considered complete until it is deployed and working in
-production.
+Each layer is production-quality and independently usable before the next layer begins. No layer is considered complete until it is deployed and working in production.
 
 ## Layer Status Key
 
@@ -12,31 +10,38 @@ production.
 
 ---
 
+## Pre-Layer 1 — Foundation
+
+- [x] Monorepo scaffold — PNPM workspaces + Nx, `apps/web`, `apps/api`, `packages/db`, `packages/shared`
+- [x] Vite + Preact frontend with LightningCSS
+- [x] Hono API server
+- [x] Vite proxying to Hono in development
+- [x] Hono serving Vite static output in production
+- [x] Railway deployment — production environment running and publicly accessible
+- [x] TypeScript end-to-end, strict mode, ESM throughout, Node 24 pinned
+
+---
+
 ## Layer 1 — Auth & User Management
 
-**Goal:** A working, invite-only authentication system with role-based user
-management.
+**Goal:** A working, invite-only authentication system with role-based user management.
 
 **Scope:**
-
-- [x] Monorepo scaffold — PNPM workspaces + Nx, `apps/web`, `apps/api`,
-  `packages/db`, `packages/shared`
-- [x] Supabase project setup — local dev with Supabase CLI
-- [~] Supabase Auth configured — public registration disabled
-- [ ] `profiles` table and migration
-- [ ] Supabase Auth trigger — auto-creates `profiles` record on invite
-  acceptance
-- [ ] Super-admin invite flow — server-side only via Hono API
+- [ ] Supabase project setup — local dev with Supabase CLI, production project configured
+- [ ] Supabase Auth configured — public registration disabled
+- [ ] Drizzle schema for `profiles` table (`packages/db/src/schema.ts`)
+- [ ] drizzle-kit migration generated and applied
+- [ ] Custom drizzle-kit migration — Auth trigger that auto-creates `profiles` record on invite acceptance
+- [ ] Custom drizzle-kit migration — RLS policies for `profiles` table
+- [ ] Super-admin invite flow — server-side only via Hono API (`POST /api/users/invite`)
 - [ ] Role assignment on invite
 - [ ] Revoke user access — sets `is_active: false`
-- [ ] Super-admin protection — system refuses any action that would leave zero
-  active super-admins
+- [ ] Super-admin protection — system refuses any action that would leave zero active super-admins (enforced in Hono API, never client-side)
 - [ ] Super-admins can revoke one another's super-admin rights
 - [ ] Basic authenticated UI shell — login, logout, session handling
-- [ ] Railway deployment — production environment running
+- [ ] RLS session helper implemented in `packages/db`
 
 **Acceptance criteria:**
-
 - A super-admin can invite a new user by email with a role assigned
 - An invited user can accept the invite and log in
 - A super-admin can revoke any user's access
@@ -48,25 +53,21 @@ management.
 
 ## Layer 2 — Planning Center Sync + Local Person Creation
 
-**Goal:** Planning Center contacts are accessible in the app, and local people
-can be added manually.
+**Goal:** Planning Center contacts are accessible in the app, and local people can be added manually.
 
 **Scope:**
-
-- [ ] `people` table and migration
-- [ ] `sync_log` table and migration
+- [ ] Drizzle schema for `people` and `sync_log` tables
+- [ ] drizzle-kit migrations generated and applied
+- [ ] Custom drizzle-kit migrations — RLS policies for `people` and `sync_log`
 - [ ] Planning Center OAuth or API key setup
 - [ ] Sync endpoint in Hono — fetches PC contacts and upserts into `people`
 - [ ] SSE stream from Hono to client — real-time sync progress
 - [ ] Sync triggered manually by pastor/super-admin
-- [ ] Scheduled sync (optional for this layer)
 - [ ] People list view — searchable, shows source indicator
 - [ ] Person detail view — basic PC data displayed
 - [ ] Add local person form — name and contact basics
-- [ ] Generated Supabase TypeScript types — `packages/db/src/database.types.ts`
 
 **Acceptance criteria:**
-
 - A pastor can trigger a PC sync and see real-time progress
 - Synced PC contacts appear in the people list
 - A local person can be added manually
@@ -82,14 +83,14 @@ can be added manually.
 **Goal:** Any authenticated user can log a contact against any person.
 
 **Scope:**
-
-- [ ] `contact_log` table and migration
+- [ ] Drizzle schema for `contact_log` table
+- [ ] drizzle-kit migration generated and applied
+- [ ] Custom drizzle-kit migration — RLS policies for `contact_log`
 - [ ] Log contact form — person, date/time, optional note
 - [ ] Contact log visible on person detail view
 - [ ] Last contacted summary visible in people list
 
 **Acceptance criteria:**
-
 - Any authenticated user can log a contact against any person
 - Contact log is visible to all authenticated users
 - People list shows who was last contacted and when
@@ -101,19 +102,17 @@ can be added manually.
 **Goal:** Authenticated users can log private pastoral notes against a person.
 
 **Scope:**
-
-- [ ] `interactions` table and migration
+- [ ] Drizzle schema for `interactions` table
+- [ ] drizzle-kit migration generated and applied
+- [ ] Custom drizzle-kit migration — RLS policies for `interactions`
 - [ ] Log interaction form — person, type, date/time, private notes
-- [ ] Interactions visible on person detail view — only to author, pastor,
-  super-admin
+- [ ] Interactions visible on person detail view — only to author, pastor, super-admin
 - [ ] Interaction type selector — visit, call, message, other
 
 **Acceptance criteria:**
-
 - Any authenticated user can log a private interaction
 - Only the author, pastors, and super-admins can read interaction notes
-- Other authenticated users see no indication that private interactions exist
-  for a person
+- Other authenticated users see no indication that private interactions exist for a person
 
 ---
 
@@ -122,14 +121,12 @@ can be added manually.
 **Goal:** A clear, useful view of a person's full contact history.
 
 **Scope:**
-
 - [ ] Person detail view — unified timeline of contact log entries
 - [ ] Private interactions shown inline for authorised users — hidden for others
 - [ ] Chronological ordering
 - [ ] Last contacted summary accurate and prominent
 
 **Acceptance criteria:**
-
 - Authorised users see a full timeline including private interactions
 - Unauthorised users see only the public contact log
 - The view is clear and usable on both desktop and mobile
@@ -141,15 +138,12 @@ can be added manually.
 **Goal:** Visitors can be added quickly and flagged for follow-up.
 
 **Scope:**
-
 - [ ] Add visitor flow — minimal form, name and basic details
-- [ ] `contact_log` record created automatically with `is_visitor: true` on
-  visitor creation
+- [ ] `contact_log` record created automatically with `is_visitor: true` on visitor creation
 - [ ] Visitors flagged visually in the people list and contact log
 - [ ] Visitor list or filter view — shows all visitors needing follow-up
 
 **Acceptance criteria:**
-
 - Any authenticated user can add a visitor in under 60 seconds
 - Visitor appears immediately in the public contact log
 - Visitors are clearly distinguishable from regular contacts
@@ -159,20 +153,16 @@ can be added manually.
 
 ## Layer 7 — Person Merge
 
-**Goal:** Local visitor records can be linked to their Planning Center record
-after joining.
+**Goal:** Local visitor records can be linked to their Planning Center record after joining.
 
 **Scope:**
-
 - [ ] Merge UI — super-admin only, displays both records side by side
 - [ ] Pre-merge validation — aborts if PC duplicate has any related records
-- [ ] Merge operation — writes PC data into local record, hard deletes PC
-  duplicate
+- [ ] Merge operation — writes PC data into local record, hard deletes PC duplicate
 - [ ] Confirmation step required before committing
 - [ ] Merge logged for audit purposes
 
 **Acceptance criteria:**
-
 - Super-admin can identify and merge a local visitor record with a PC duplicate
 - All history on the local record is preserved intact
 - PC duplicate is deleted cleanly

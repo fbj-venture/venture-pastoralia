@@ -4,18 +4,20 @@
 
 Six tables. The security boundary is between `contact_log` (public to all authenticated users) and `interactions` (private to the author). These are intentionally separate tables — never views or filtered queries of the same table.
 
+All schema is defined in TypeScript using Drizzle ORM in `packages/db/src/schema.ts`. Migrations are generated and managed exclusively via drizzle-kit.
+
 ## Tables
 
 ### `profiles`
 
-Extends Supabase `auth.users`. Created automatically on user invite acceptance.
+Extends Supabase `auth.users`. Created automatically on user invite acceptance via a Postgres trigger.
 
 | Field | Type | Notes |
 |---|---|---|
 | `id` | `uuid` | References `auth.users.id` |
 | `full_name` | `text` | |
 | `role` | `enum` | `super_admin`, `pastor`, `elder`, `deacon` |
-| `is_active` | `boolean` | False = revoked. Revoked users cannot authenticate |
+| `is_active` | `boolean` | Default true. False = revoked. Revoked users cannot authenticate |
 | `planning_center_id` | `text` | Nullable. Links profile to PC person record |
 | `invited_by` | `uuid` | References `profiles.id`. Nullable for first super-admin |
 | `created_at` | `timestamptz` | |
@@ -38,7 +40,7 @@ Congregation members and visitors. Sourced from Planning Center or added locally
 
 ### `contact_log`
 
-Public record of contact. Visible to all authenticated users. Contains no sensitive content.
+Public record of contact. Visible to all authenticated users. Contains no sensitive content. Immutable once created.
 
 | Field | Type | Notes |
 |---|---|---|
@@ -96,16 +98,16 @@ Planning Center sync history. Fed by the SSE stream during active syncs.
 
 ## Row Level Security
 
-RLS is the primary security enforcement layer. All database access goes through the Supabase JS client, which respects RLS automatically. Direct Postgres connections are never used in application code.
+RLS is the primary security enforcement layer. All RLS policies are defined as custom drizzle-kit migrations. All database access goes through Drizzle ORM with the RLS session helper, which ensures policies fire correctly for every query.
 
 | Table | Read | Insert | Update | Delete |
 |---|---|---|---|---|
-| `profiles` | All authenticated | Super-admin only | Super-admin only | Never |
+| `profiles` | All authenticated | Super-admin only (server-side invite flow) | Super-admin only | Never |
 | `people` | All authenticated | All authenticated | Creator or super-admin | Creator or super-admin |
 | `contact_log` | All authenticated | All authenticated | Never | Never |
 | `interactions` | Author, pastor, super-admin | All authenticated | Author only | Author only |
 | `follow_ups` | Same as parent interaction | Author of parent interaction | Author of parent interaction | Author of parent interaction |
-| `sync_log` | All authenticated | Pastor, super-admin | Never | Never |
+| `sync_log` | All authenticated | Pastor, super-admin (server-side only) | Never | Never |
 
 **Note:** `contact_log` records are intentionally immutable once created. They are a historical record.
 

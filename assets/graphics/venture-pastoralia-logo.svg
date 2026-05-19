@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
+  <defs>
+    <linearGradient id="crookGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C17B2F;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A0522D;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="peopleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8A838;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#C17B2F;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D4633A;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B84C2A;stop-opacity:1" />
+    </linearGradient>
+    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-color="#A0522D" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+
+  <!-- ═══ ICON MARK ═══ -->
+  <g transform="translate(20, 15)" filter="url(#softShadow)">
+
+    <!-- Shepherd's crook — elegant curved staff -->
+    <!-- Vertical staff -->
+    <rect x="38" y="38" width="6" height="82" rx="3" fill="url(#crookGrad)"/>
+
+    <!-- Crook curve — top hook -->
+    <path d="M 44 52 Q 44 22 62 22 Q 80 22 80 40 Q 80 52 68 56 Q 60 58 56 54"
+          fill="none"
+          stroke="url(#crookGrad)"
+          stroke-width="6"
+          stroke-linecap="round"/>
+
+    <!-- Three people as abstract circles with connecting arc — community -->
+    <!-- Person 1 (left, slightly back) -->
+    <circle cx="20" cy="88" r="9" fill="url(#peopleGrad)" opacity="0.75"/>
+    <rect x="14" y="97" width="12" height="14" rx="6" fill="url(#peopleGrad)" opacity="0.75"/>
+
+    <!-- Person 2 (centre, front) -->
+    <circle cx="41" cy="83" r="11" fill="url(#accentGrad)"/>
+    <rect x="33" y="94" width="16" height="16" rx="8" fill="url(#accentGrad)"/>
+
+    <!-- Person 3 (right, slightly back) -->
+    <circle cx="63" cy="88" r="9" fill="url(#peopleGrad)" opacity="0.75"/>
+    <rect x="57" y="97" width="12" height="14" rx="6" fill="url(#peopleGrad)" opacity="0.75"/>
+
+    <!-- Subtle arc connecting the community beneath the crook -->
+    <path d="M 14 115 Q 41 122 68 115"
+          fill="none"
+          stroke="#E8A838"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          opacity="0.5"/>
+  </g>
+
+  <!-- ═══ WORDMARK ═══ -->
+  <g transform="translate(118, 0)">
+    <!-- VENTURE -->
+    <text
+      x="0" y="72"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="13"
+      font-weight="normal"
+      letter-spacing="5"
+      fill="#C17B2F"
+      opacity="0.85">VENTURE</text>
+
+    <!-- PASTORALIA -->
+    <text
+      x="-2" y="108"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="34"
+      font-weight="bold"
+      letter-spacing="1.5"
+      fill="#7A3B1E">PASTORALIA</text>
+
+    <!-- Warm underline accent -->
+    <rect x="0" y="116" width="255" height="2.5" rx="1.25" fill="url(#accentGrad)" opacity="0.6"/>
+
+    <!-- Tagline -->
+    <text
+      x="1" y="138"
+      font-family="Georgia, 'Times New Roman', serif"
+      font-size="11"
+      font-style="italic"
+      letter-spacing="1"
+      fill="#C17B2F"
+      opacity="0.7">pastoral care, thoughtfully kept</text>
+  </g>
+</svg>

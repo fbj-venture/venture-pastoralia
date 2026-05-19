@@ -9,6 +9,11 @@ const schema = {
    }),
    db: group({
       DATABASE_URL: prop.url("the Supabase DB connection string")
+   }),
+   supabase: group({
+      SUPABASE_URL: prop.url("the Supabase project URL"),
+      SUPABASE_ANON_KEY: prop.string("the Supabase anon/public key"),
+      SUPABASE_SERVICE_ROLE_KEY: prop.string("the Supabase service role key for admin operations")
    })
 }
 

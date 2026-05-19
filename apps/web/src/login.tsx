@@ -1,28 +1,31 @@
 import { useState } from 'preact/hooks'
 import { useLocation } from 'preact-iso'
-
-type LoginStep = 'email' | 'sent'
+import { api, setToken } from './lib/api'
 
 export function Login() {
   const { route } = useLocation()
-  const [step, setStep] = useState<LoginStep>('email')
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
-  function handleSubmit(e: Event) {
+  async function handleSubmit(e: Event) {
     e.preventDefault()
-    if (!email.trim()) return
     setLoading(true)
-    // Replace with: supabase.auth.signInWithOtp({ email })
-    setTimeout(() => {
-      setLoading(false)
-      setStep('sent')
-    }, 900)
-  }
+    setError(null)
 
-  function handleBack() {
-    setStep('email')
-    setLoading(false)
+    // console.log({ email, password })
+    const res = await api.api.auth.login.$post({ json: { email, password } })
+    const data = await res.json()
+
+    if (!res.ok || 'error' in data) {
+      setError('error' in data ? data.error : 'Login failed')
+      setLoading(false)
+      return
+    }
+
+    setToken(data.access_token)
+    route('/dashboard')
   }
 
   return (
@@ -42,107 +45,63 @@ export function Login() {
 
       <div class="auth__stage">
         <div class="auth__card">
-          {step === 'email' ? (
-            <EmailStep
-              email={email}
-              loading={loading}
-              onEmailChange={setEmail}
-              onSubmit={handleSubmit}
-            />
-          ) : (
-            <SentStep email={email} onBack={handleBack} onLogin={() => route('/dashboard')} />
-          )}
+          <div class="auth__intro">
+            <h1 class="auth__heading">Welcome back</h1>
+            <p class="auth__sub">Sign in to your account.</p>
+          </div>
+
+          <form class="auth__form" onSubmit={handleSubmit}>
+            <div class="auth__field">
+              <label class="auth__label" for="auth-email">Email address</label>
+              <input
+                id="auth-email"
+                class="auth__input"
+                type="email"
+                placeholder="you@example.com"
+                value={email}
+                onInput={(e) => setEmail((e.target as HTMLInputElement).value)}
+                required
+                autoComplete="email"
+              />
+            </div>
+            <div class="auth__field">
+              <label class="auth__label" for="auth-password">Password</label>
+              <input
+                id="auth-password"
+                class="auth__input"
+                type="password"
+                placeholder="••••••••"
+                value={password}
+                onInput={(e) => setPassword((e.target as HTMLInputElement).value)}
+                required
+                autoComplete="current-password"
+              />
+            </div>
+
+            {error && <p class="auth__error">{error}</p>}
+
+            <button class="auth__submit" type="submit" disabled={loading}>
+              {loading && <span class="auth__spinner" aria-hidden="true" />}
+              {loading ? 'Signing in…' : 'Sign in'}
+            </button>
+          </form>
+
+          <div class="auth__divider"><span>or</span></div>
+
+          <button class="auth__oauth-btn" type="button" disabled aria-disabled="true">
+            <IconGoogle />
+            <span>Continue with Google</span>
+            <span class="auth__oauth-badge">Soon</span>
+          </button>
+
+          <p class="auth__note">
+            This app is for authorised staff only. There is no self-registration — contact your administrator to request access.
+          </p>
         </div>
       </div>
     </div>
   )
 }
-
-// ── Email step ───────────────────────────────────────────
-
-interface EmailStepProps {
-  email: string
-  loading: boolean
-  onEmailChange: (v: string) => void
-  onSubmit: (e: Event) => void
-}
-
-function EmailStep({ email, loading, onEmailChange, onSubmit }: EmailStepProps) {
-  return (
-    <>
-      <div class="auth__intro">
-        <h1 class="auth__heading">Welcome back</h1>
-        <p class="auth__sub">Enter your email to receive a sign-in link.</p>
-      </div>
-
-      <form class="auth__form" onSubmit={onSubmit}>
-        <div class="auth__field">
-          <label class="auth__label" for="auth-email">Email address</label>
-          <input
-            id="auth-email"
-            class="auth__input"
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onInput={(e) => onEmailChange((e.target as HTMLInputElement).value)}
-            required
-            autoComplete="email"
-          />
-        </div>
-        <button class="auth__submit" type="submit" disabled={loading}>
-          {loading && <span class="auth__spinner" aria-hidden="true" />}
-          {loading ? 'Sending…' : 'Send sign-in link'}
-        </button>
-      </form>
-
-      <div class="auth__divider"><span>or</span></div>
-
-      <button class="auth__oauth-btn" type="button" disabled aria-disabled="true">
-        <IconGoogle />
-        <span>Continue with Google</span>
-        <span class="auth__oauth-badge">Soon</span>
-      </button>
-
-      <p class="auth__note">
-        This app is for authorised staff only. There is no self-registration — contact your administrator to request access.
-      </p>
-    </>
-  )
-}
-
-// ── Sent step ────────────────────────────────────────────
-
-interface SentStepProps {
-  email: string
-  onBack: () => void
-  onLogin: () => void
-}
-
-function SentStep({ email, onBack, onLogin }: SentStepProps) {
-  return (
-    <div class="auth__sent">
-      <div class="auth__sent-icon"><IconEnvelope /></div>
-      <div class="auth__intro" style="text-align:center">
-        <h1 class="auth__heading">Check your inbox</h1>
-        <p class="auth__sub">
-          We sent a sign-in link to<br />
-          <strong class="auth__sent-email">{email}</strong>
-        </p>
-      </div>
-      <p class="auth__note">
-        The link expires in 10 minutes. Check your spam folder if you don't see it.
-      </p>
-      <button class="auth__submit" type="button" onClick={onLogin}>
-        Open dashboard →
-      </button>
-      <button class="auth__back" type="button" onClick={onBack}>
-        ← Use a different email
-      </button>
-    </div>
-  )
-}
-
-// ── Icons ────────────────────────────────────────────────
 
 function IconGoogle() {
   return (
@@ -163,15 +122,6 @@ function IconGoogle() {
         d="M8 3.18c1.22 0 2.31.42 3.17 1.24l2.37-2.37A8 8 0 00.98 4.39L3.57 6.46A4.8 4.8 0 018 3.18z"
         fill="#EA4335"
       />
-    </svg>
-  )
-}
-
-function IconEnvelope() {
-  return (
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
-      <rect x="2.5" y="6" width="23" height="16" rx="2.5" stroke="var(--amber)" strokeWidth="1.75" />
-      <path d="M2.5 9.5l11.5 8 11.5-8" stroke="var(--amber)" strokeWidth="1.75" strokeLinecap="round" />
     </svg>
   )
 }

@@ -16,9 +16,8 @@ This is a pastoral care management web application for a church pastor and small
 - **Frontend:** Vite + Preact (TypeScript) + LightningCSS
 - **API:** Hono (TypeScript) — serves static frontend assets in production and handles all API routes
 - **Database:** Supabase (PostgreSQL + Auth + Row Level Security)
-- **Query builder:** Kysely with `kysely-supabase` type bridge — server-side only, RLS-preserving
-- **Types:** Supabase generated TypeScript types via Supabase CLI, translated to Kysely-compatible types via `KyselifyDatabase`
-- **Migrations:** Supabase CLI
+- **Query builder / ORM:** Drizzle ORM with drizzle-kit — server-side only, RLS-preserving
+- **Migrations:** drizzle-kit (schema migrations auto-generated from TypeScript schema; RLS policies, triggers, and functions via `drizzle-kit generate --custom`)
 - **Monorepo:** PNPM workspaces + Nx
 - **Hosting:** Railway (Hobby plan)
 
@@ -29,7 +28,7 @@ apps/
   web/          # Vite + Preact frontend with LightningCSS
   api/          # Hono API server
 packages/
-  db/           # Kysely client, generated types, schema, RLS session helper
+  db/           # Drizzle client, schema definitions, migrations, RLS helper
   shared/       # Shared TypeScript types consumed by both web and api
 docs/
   architecture.md
@@ -48,14 +47,16 @@ This project is TypeScript end-to-end. These are non-negotiable setup requiremen
 - **Strict mode is enabled everywhere** — `"strict": true` in `tsconfig.base.json`. Never disable or relax strict mode
 - **ESM throughout** — `"type": "module"` in all `package.json` files. No CommonJS
 - **Node 24** — pinned via `.nvmrc` (containing `24`) and `"engines": { "node": ">=24.0.0" }` in root `package.json`
-- **Supabase generated types** are the source of truth for database types — never manually write database types. These are translated to Kysely-compatible types via `KyselifyDatabase` from `kysely-supabase`
+- **Drizzle schema is the source of truth for database types** — never manually write database types independently of the schema
 
 ## Key Conventions
 
-- All database access goes through Kysely on the server — never direct Postgres queries without the RLS session helper, never from the frontend
+- All database access goes through Drizzle on the server — never from the frontend
+- Every Drizzle query must be executed via the RLS session helper in `packages/db` — never bypass it
 - All API calls go through Hono — never direct database calls from the frontend
-- RLS is the security layer — every Kysely query must be wrapped in the RLS session helper in `packages/db`. Never bypass this
-- Migrations are managed exclusively through the Supabase CLI — never edited manually in the dashboard
+- RLS is the security layer — never rely solely on application-level checks for access control
+- Schema migrations are managed exclusively through drizzle-kit — never edited manually in the Supabase dashboard
+- RLS policies, triggers, and database functions are managed as custom drizzle-kit migrations
 - All user management (invite, revoke, role assignment) is server-side only, never client-triggered directly
 - LightningCSS is the CSS processor — no PostCSS, no Tailwind, no CSS-in-JS
 
@@ -68,16 +69,23 @@ supabase start
 # Start development servers
 pnpm dev
 
-# Generate Supabase types
-supabase gen types typescript --local > packages/db/src/database.types.ts
+# Generate a migration from schema changes
+drizzle-kit generate
 
-# Run migrations
-supabase db push
+# Generate a custom migration (for RLS policies, triggers, functions)
+drizzle-kit generate --custom
+
+# Apply migrations
+drizzle-kit migrate
+
+# Run Drizzle Studio (local DB browser)
+drizzle-kit studio
 ```
 
 ## Environment Variables
 
 See `.env.example` for required variables. Never commit `.env` files.
+Nx loads `.env` from the workspace root automatically when running targets.
 
 
 <!-- nx configuration start-->
