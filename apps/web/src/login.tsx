@@ -1,6 +1,6 @@
 import { useState } from 'preact/hooks'
 import { useLocation } from 'preact-iso'
-import { api, setToken } from './lib/api'
+import { api, setToken } from './data/api'
 
 export function Login() {
   const { route } = useLocation()

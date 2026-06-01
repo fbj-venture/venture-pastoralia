@@ -6,5 +6,5 @@ render(
   <LocationProvider>
     <App />
   </LocationProvider>,
-  document.getElementById('app')!,
+  document.body!,
 )

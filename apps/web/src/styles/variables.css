@@ -1,0 +1,63 @@
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Surfaces */
+    --bg-base: #F7F3EE;
+    --bg-surface: #FFFFFF;
+    --bg-elevated: #EFE9E1;
+    --bg-overlay: #E6DFD5;
+    --bg-hover: rgba(0, 0, 0, 0.04);
+
+    /* Text */
+    --text-primary: #1C1714;
+    --text-secondary: #6B6358;
+    --text-muted: #A39D96;
+
+    /* Orange-amber accent */
+    --amber: #B85C00;
+    --amber-light: #D06A00;
+    --amber-dim: rgba(184, 92, 0, 0.08);
+    --amber-border: rgba(184, 92, 0, 0.2);
+
+    /* Red — urgent, high contrast */
+    /*--urgent: #B91C1C;*/
+    --urgent: #ff5e6e; /*#0aafaf;*/
+    --urgent-light: #C53030; /*#0a6464;*/
+    --urgent-dim: rgb(197 48 48 / 0.1);
+
+    /* Sage — positive */
+    --sage: #276048;
+    --sage-light: #2F7055;
+
+    /* Admin — indigo */
+    --admin: #4338CA;
+    --admin-dim: rgba(67, 56, 202, 0.08);
+    --admin-border: rgba(67, 56, 202, 0.2);
+
+    /* Super-user — warm amber */
+    --su: #92400E;
+    --su-dim: rgba(146, 64, 14, 0.08);
+    --su-border: rgba(146, 64, 14, 0.25);
+
+    /* Structure */
+    --border: rgba(0, 0, 0, 0.08);
+
+    /* Typography */
+    --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+
+    /* Layout */
+    --sidebar-width: 14rem;
+
+    /* Radii */
+    --radius-sm: 0.375rem;
+    --radius-md: 0.625rem;
+    --radius-lg: 1rem;
+}

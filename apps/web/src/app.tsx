@@ -1,13 +1,18 @@
-import { Router, Route } from 'preact-iso'
+import {Router, Route} from 'preact-iso'
 import './global.css'
-import { Login } from './login'
-import { Dashboard } from './dashboard'
+import {Login} from './auth/login'
+import {Dashboard} from './dashboard/dashboard'
+import {QueryClient, QueryClientProvider} from "@tanstack/preact-query"
+
+const query = new QueryClient()
 
 export function App() {
   return (
-    <Router>
-      <Route path="/" component={Login} />
-      <Route path="/dashboard" component={Dashboard} />
-    </Router>
+    <QueryClientProvider client={query}>
+      <Router>
+        <Route path="/" component={Login}/>
+        <Route path="/dashboard" component={Dashboard}/>
+      </Router>
+    </QueryClientProvider>
   )
 }

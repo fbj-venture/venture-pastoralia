@@ -8,6 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@formisch/preact": "^0.10.0",
+    "@tanstack/preact-query": "^5.100.14",
+    "@venture-pastoralia/shared": "workspace:^",
     "hono": "^4.12.14",
     "preact": "^10.25.0",
     "preact-iso": "^2.11.1",

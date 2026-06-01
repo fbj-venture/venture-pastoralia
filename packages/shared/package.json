@@ -12,6 +12,9 @@
   "scripts": {
     "build": "tsc"
   },
+  "dependencies": {
+    "valibot": "^1.4.1"
+  },
   "devDependencies": {
     "typescript": "^5.7.3"
   }
