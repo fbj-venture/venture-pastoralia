@@ -1,6 +1,6 @@
 import preact from '@preact/preset-vite'
 import { defineConfig } from 'vite'
-import { qrcode } from 'vite-plugin-qrcode'
+// import { qrcode } from 'vite-plugin-qrcode'
 import { fileURLToPath } from 'url'
 import path from 'path'
 
@@ -10,7 +10,7 @@ export default defineConfig({
   envDir: path.resolve(__dirname, '../..'),
   plugins: [
   	preact(), 
-  	qrcode() 
+  	// qrcode()
  ],
   css: {
     transformer: 'lightningcss',

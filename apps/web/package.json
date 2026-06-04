@@ -8,13 +8,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@formisch/preact": "^0.10.0",
+    "@tanstack/preact-form": "^1.30.0",
     "@tanstack/preact-query": "^5.100.14",
     "@venture-pastoralia/shared": "workspace:^",
     "hono": "^4.12.14",
     "preact": "^10.25.0",
     "preact-iso": "^2.11.1",
-    "vite-plugin-qrcode": "^0.4.1"
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.9.0",

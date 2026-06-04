@@ -18,6 +18,8 @@ This is a pastoral care management web application for a church pastor and small
 - **Database:** Supabase (PostgreSQL + Auth + Row Level Security)
 - **Query builder / ORM:** Drizzle ORM with drizzle-kit — server-side only, RLS-preserving
 - **Migrations:** drizzle-kit (schema migrations auto-generated from TypeScript schema; RLS policies, triggers, and functions via `drizzle-kit generate --custom`)
+- **Validation:** Zod 4 — schema definitions in `packages/shared`, consumed by both web and api
+- **Forms:** TanStack Form (`@tanstack/preact-form`) — frontend form handling; Zod 4 schemas used directly as validators via Standard Schema (no adapter)
 - **Monorepo:** PNPM workspaces + Nx
 - **Hosting:** Railway (Hobby plan)
 
@@ -59,6 +61,8 @@ This project is TypeScript end-to-end. These are non-negotiable setup requiremen
 - RLS policies, triggers, and database functions are managed as custom drizzle-kit migrations
 - All user management (invite, revoke, role assignment) is server-side only, never client-triggered directly
 - LightningCSS is the CSS processor — no PostCSS, no Tailwind, no CSS-in-JS
+- Validation schemas are defined in `packages/shared` using Zod 4 — never define duplicate schemas in app packages
+- TanStack Form is used for all frontend forms — Zod 4 schemas are passed directly as field/form validators (Standard Schema, no adapter needed)
 
 ## Development
 

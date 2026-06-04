@@ -50,6 +50,16 @@ Every Drizzle query must be wrapped in the RLS session helper defined in `packag
 
 This is the critical piece that makes Drizzle + RLS work. It must never be bypassed.
 
+### Validation — Zod 4
+
+Zod 4 is used for all runtime validation. Schemas are defined once in `packages/shared` and consumed by both the web frontend and the Hono API. This prevents schema drift between the two layers.
+
+Zod 4 implements the Standard Schema spec (`~standard`), which allows schemas to be passed directly to TanStack Form validators without any adapter package.
+
+### Forms — TanStack Form
+
+TanStack Form (`@tanstack/preact-form`) handles all frontend form state and validation. Zod 4 schemas from `packages/shared` are passed directly as `validators.onChange` (and `validators.onSubmit`) on individual fields — the Standard Schema integration removes any need for a separate `@tanstack/zod-form-adapter`.
+
 ### LightningCSS
 
 LightningCSS is used as the CSS processor in Vite on the frontend. No PostCSS, no Tailwind, no CSS-in-JS. LightningCSS handles modern CSS features, nesting, and vendor prefixing natively at build time.
