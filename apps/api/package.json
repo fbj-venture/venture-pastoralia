@@ -1,5 +1,5 @@
 {
-   "name": "@venture-pastoralia/api",
+   "name": "@app/api",
    "description": "The Hono API server for Venture Pastoralia",
    "private": true,
    "type": "module",

@@ -1,24 +1,15 @@
 import { useLocation } from 'preact-iso'
-import { useForm } from '@tanstack/preact-form'
+import { type StandardSchemaV1Issue, useForm } from '@tanstack/preact-form'
 import LogoIcon from "../assets/images/venture-pastoralia-icon.svg"
 import { IconGoogle } from "../components/icons";
-import { LoginSchema } from "@venture-pastoralia/shared";
+import { FieldError, MakeError } from "../components/field-error";
+import { LoginSchema } from "@app/shared";
 import { useMutation } from "@tanstack/preact-query";
 import { tryLogin } from "../data/auth";
-import { $ZodIssue } from "zod/v4/core";
-
-type Error = $ZodIssue[] | null
-
-const toZodError = (meta: unknown): Error => {
-  const errors = meta as unknown as { isValid: boolean, errors: $ZodIssue[] }
-  if (errors.isValid) {
-    return null
-  }
-  return errors.errors
-}
+import { useState } from "preact/hooks";
 
 export function Login() {
-  const {route} = useLocation()
+  const { route } = useLocation()
 
   const authLogin = useMutation({
     mutationFn: tryLogin,
@@ -26,7 +17,8 @@ export function Login() {
       route('/dashboard')
     },
     onError: err => {
-      console.log(err)
+      const errors = MakeError(err.message)
+      console.log(err, errors)
     }
   })
 
@@ -35,7 +27,7 @@ export function Login() {
       email: '',
       password: ''
     },
-    onSubmit: async ({value}) => {
+    onSubmit: async ({ value }) => {
       authLogin.mutate(value)
     },
   })
@@ -73,69 +65,66 @@ export function Login() {
           >
             <form.Field
               name="email"
-              validators={ {onChange: LoginSchema.shape.email} }
+              validators={ { onChange: LoginSchema.shape.email } }
             >
-              { (field) => {
-                const errors = toZodError(field.state.meta);
-                return (
-                  <div class="auth__field">
-                    <label class="auth__label" htmlFor={ field.name }>User email</label>
-                    <input
-                      type="email"
-                      class={ `auth__input ${errors ? 'auth__input--error' : ''}`  }
-                      id={ field.name }
-                      name={ field.name }
-                      value={ field.state.value }
-                      onBlur={ field.handleBlur }
-                      onChange={ (e) => field.handleChange(e.currentTarget.value) }
-                      autoComplete="email"
-                      placeholder="you@example.com"
-                    />
-                    { errors && <p class="auth__error">{ (field.state.meta.errors[0] as $ZodIssue).message }</p> }
-                  </div>
-                )
-              } }
+              { (field) => (
+                <div class="auth__field">
+                  <label class="auth__label" htmlFor={ field.name }>User email</label>
+                  <input
+                    type="email"
+                    class={ `auth__input ${ field.state.meta.errors.length > 0 ? 'auth__input--error' : '' }` }
+                    id={ field.name }
+                    name={ field.name }
+                    value={ field.state.value }
+                    onBlur={ field.handleBlur }
+                    onChange={ (e) => field.handleChange(e.currentTarget.value) }
+                    autoComplete="email"
+                    placeholder="you@example.com"
+                  />
+                  <FieldError errors={ field.state.meta.errors }/>
+                </div>
+              ) }
             </form.Field>
 
             <form.Field
               name="password"
-              validators={ {onChange: LoginSchema.shape.password} }
+              validators={ { onChange: LoginSchema.shape.password } }
             >
-              { (field) => {
-                const errors = toZodError(field.state.meta);
-                return (
-                  <div class="auth__field">
-                    <label class="auth__label" htmlFor={ field.name }>Password</label>
-                    <input
-                      type="password"
-                      class={ `auth__input ${errors ? 'auth__input--error' : ''}`  }
-                      id={ field.name }
-                      name={ field.name }
-                      value={ field.state.value }
-                      onBlur={ field.handleBlur }
-                      onInput={ (e) => field.handleChange(e.currentTarget.value) }
-                      placeholder="************"
-                    />
-                    { errors && <p class="auth__error">{ errors[0].message }</p> }
-                  </div>
-                )
-              } }
+              { (field) => (
+                <div class="auth__field">
+                  <label class="auth__label" htmlFor={ field.name }>Password</label>
+                  <input
+                    type="password"
+                    class={ `auth__input ${ field.state.meta.errors.length > 0 ? 'auth__input--error' : '' }` }
+                    id={ field.name }
+                    name={ field.name }
+                    value={ field.state.value }
+                    onBlur={ field.handleBlur }
+                    onInput={ (e) => field.handleChange(e.currentTarget.value) }
+                    placeholder="************"
+                  />
+                  <FieldError errors={ field.state.meta.errors }/>
+                </div>
+              ) }
             </form.Field>
 
-            { authLogin.isError && (
-              <p class="auth__error">{ authLogin.error?.message }</p>
-            ) }
-
             <form.Subscribe
-              selector={ (state) => ({canSubmit: state.canSubmit, isSubmitting: state.isSubmitting}) }
+              selector={ (state) => ({ canSubmit: state.canSubmit, isSubmitting: state.isSubmitting }) }
             >
-              { ({canSubmit, isSubmitting}) => (
+              { ({ canSubmit, isSubmitting }) => (
                 <button class="auth__submit" type="submit" disabled={ !canSubmit || isSubmitting }>
                   { isSubmitting && <span class="auth__spinner" aria-hidden="true"/> }
                   { isSubmitting ? 'Signing in…' : 'Sign in' }
                 </button>
               ) }
             </form.Subscribe>
+
+            { authLogin.isError && (
+              <p
+                style="padding-top: 1rem; text-align: center;"
+                class="auth__error"
+              >{ authLogin.error?.message }</p>
+            ) }
           </form>
 
           <div class="auth__divider"><span>or</span></div>

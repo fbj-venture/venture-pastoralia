@@ -3,6 +3,7 @@ import './global.css'
 import {Login} from './auth/login'
 import {Dashboard} from './dashboard/dashboard'
 import {QueryClient, QueryClientProvider} from "@tanstack/preact-query"
+import {Devtools} from './devtools'
 
 const query = new QueryClient()
 
@@ -13,6 +14,7 @@ export function App() {
         <Route path="/" component={Login}/>
         <Route path="/dashboard" component={Dashboard}/>
       </Router>
+      {import.meta.env.DEV && <Devtools/>}
     </QueryClientProvider>
   )
 }

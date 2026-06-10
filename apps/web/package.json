@@ -1,5 +1,5 @@
 {
-  "name": "@venture-pastoralia/web",
+  "name": "@app/web",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,9 +8,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@app/shared": "workspace:^",
     "@tanstack/preact-form": "^1.30.0",
     "@tanstack/preact-query": "^5.100.14",
-    "@venture-pastoralia/shared": "workspace:^",
+    "@tanstack/preact-query-devtools": "^5.101.0",
     "hono": "^4.12.14",
     "preact": "^10.25.0",
     "preact-iso": "^2.11.1",
@@ -18,6 +19,10 @@
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.9.0",
+    "@tanstack/devtools": "^0.12.2",
+    "@tanstack/devtools-vite": "^0.7.0",
+    "@tanstack/form-devtools": "^0.2.29",
+    "@tanstack/preact-devtools": "^0.10.5",
     "lightningcss": "^1.29.0",
     "typescript": "^5.7.3",
     "vite": "^6.3.0"

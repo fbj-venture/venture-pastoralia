@@ -24,6 +24,7 @@
 
 .auth__panel {
     width: 38%;
+    max-width: 30rem;
     flex-shrink: 0;
     background: linear-gradient(155deg, #C86800 0%, #7A3000 100%);
     position: relative;

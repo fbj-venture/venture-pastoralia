@@ -1,5 +1,5 @@
 {
-  "name": "@venture-pastoralia/db",
+  "name": "@app/db",
   "private": true,
   "type": "module",
   "version": "0.0.0",

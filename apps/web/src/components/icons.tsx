@@ -110,6 +110,17 @@ export function IconHamburger() {
     )
 }
 
+export function IconLogout() {
+    return (
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+            <path d="M6 1.5H2.5a1 1 0 00-1 1v9a1 1 0 001 1H6" stroke="currentColor" strokeWidth="1.4"
+                  strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M9.5 10.5L13 7l-3.5-3.5M13 7H5.5" stroke="currentColor" strokeWidth="1.4"
+                  strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
+    )
+}
+
 export function IconPlus() {
     return (
         <svg width="13" height="13" viewBox="0 0 13 13" fill="none">

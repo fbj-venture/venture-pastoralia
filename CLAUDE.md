@@ -68,7 +68,7 @@ This project is TypeScript end-to-end. These are non-negotiable setup requiremen
 
 ```bash
 # Start local Supabase
-supabase start
+index start
 
 # Start development servers
 pnpm dev

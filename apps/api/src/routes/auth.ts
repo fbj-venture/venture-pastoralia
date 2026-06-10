@@ -1,6 +1,6 @@
 import {Hono} from 'hono'
 import {validator} from 'hono/validator'
-import {supabase} from '../lib/supabase.js'
+import {index} from '../supabase/index.js'
 
 export const auth = new Hono()
     .post(
@@ -14,7 +14,7 @@ export const auth = new Hono()
         }),
         async (c) => {
             const {email, password} = c.req.valid('json')
-            const {data, error} = await supabase.auth.signInWithPassword({email, password})
+            const {data, error} = await index.auth.signInWithPassword({email, password})
             console.log({data, error})
             if (error) return c.json({error: error.message}, 401)
             return c.json({
@@ -35,7 +35,7 @@ export const auth = new Hono()
         const token = bearer?.startsWith('Bearer ') ? bearer.slice(7) : null
         if (!token) return c.json({user: null}, 401)
 
-        const {data, error} = await supabase.auth.getUser(token)
+        const {data, error} = await index.auth.getUser(token)
         if (error || !data.user) return c.json({user: null}, 401)
 
         return c.json({

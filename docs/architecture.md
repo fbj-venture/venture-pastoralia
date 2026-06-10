@@ -85,7 +85,7 @@ The Nx task dependency graph ensures step 1 always precedes steps 2 and 3.
 
 ## Development Setup
 
-Vite dev server runs with a proxy config that forwards `/api/*` requests to the local Hono server. Supabase runs locally via `supabase start`. Nx loads `.env` from the workspace root automatically.
+Vite dev server runs with a proxy config that forwards `/api/*` requests to the local Hono server. Supabase runs locally via `index start`. Nx loads `.env` from the workspace root automatically.
 
 ## Planning Center Integration
 

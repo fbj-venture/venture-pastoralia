@@ -1,5 +1,5 @@
 {
-  "name": "@venture-pastoralia/shared",
+  "name": "@app/shared",
   "private": true,
   "type": "module",
   "version": "0.0.0",
