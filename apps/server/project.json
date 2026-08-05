@@ -1,8 +1,8 @@
 {
-  "name": "web",
+  "name": "server",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/web/src",
+  "sourceRoot": "apps/server/src",
   "targets": {
     "dev": {
       "executor": "nx:run-commands",
@@ -13,6 +13,7 @@
     },
     "build": {
       "executor": "nx:run-commands",
+      "dependsOn": [{ "projects": ["client"], "target": "build" }],
       "options": {
         "command": "pnpm build",
         "cwd": "{projectRoot}"
@@ -21,10 +22,10 @@
       "inputs": ["production", "^production"],
       "outputs": ["{projectRoot}/dist"]
     },
-    "preview": {
+    "start": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm preview",
+        "command": "pnpm start",
         "cwd": "{projectRoot}"
       }
     }

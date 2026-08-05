@@ -22,7 +22,7 @@ export type AppType = typeof app
 
 // Setup the static part of the app - in production this will be the Vite Web app
 if (env.NODE_ENV === 'production') {
-  const root = env.hono.STATIC_DIR ?? join(fileURLToPath(new URL('.', import.meta.url)), '../../web/dist')
+  const root = env.hono.STATIC_DIR ?? join(fileURLToPath(new URL('.', import.meta.url)), '../../client/dist')
   console.log(`Root: ${root}`)
   app.use('/*', serveStatic({root}))
 }

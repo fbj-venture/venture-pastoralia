@@ -128,3 +128,14 @@ export function IconPlus() {
         </svg>
     )
 }
+
+export function IconSync() {
+    return (
+        <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
+            <path d="M2.5 7.5a5 5 0 018.4-3.65M12.5 7.5a5 5 0 01-8.4 3.65" stroke="currentColor" strokeWidth="1.4"
+                  strokeLinecap="round"/>
+            <path d="M10.5 2.5v2.5H8M4.5 12.5V10H7" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"
+                  strokeLinejoin="round"/>
+        </svg>
+    )
+}

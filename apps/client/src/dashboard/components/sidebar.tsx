@@ -7,7 +7,7 @@ import {
   IconPeople,
   IconPin,
   IconShield,
-  IconStar
+  IconStar, IconSync
 } from "../../components/icons";
 import { JSX } from "preact";
 import { User } from "@app/shared";
@@ -59,6 +59,10 @@ export const Sidebar = ({open, onClose, user}: Props): JSX.Element => {
             <span>Admin Panel</span>
           </a>
           <a href="#" class="sidebar__navitem sidebar__navitem--superuser" onClick={ onClose }>
+            <span class="sidebar__navicon"><IconSync/></span>
+            <span>Synchronise</span>
+          </a>
+          <a href="#" class="sidebar__navitem sidebar__navitem--superuser" onClick={ onClose }>
             <span class="sidebar__navicon"><IconStar/></span>
             <span>Super User</span>
             <span class="sidebar__badge">SU</span>
@@ -75,7 +79,7 @@ export const Sidebar = ({open, onClose, user}: Props): JSX.Element => {
         >
           <div class="sidebar__avatar">FJ</div>
           <div class="sidebar__userinfo">
-            <span class="sidebar__username">Pastor Francis</span>
+            <span class="sidebar__username">Francis</span>
             <span class="sidebar__userrole">Super User</span>
           </div>
         </button>

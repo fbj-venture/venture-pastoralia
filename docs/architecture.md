@@ -66,7 +66,7 @@ LightningCSS is used as the CSS processor in Vite on the frontend. No PostCSS, n
 
 ### Monorepo — PNPM + Nx
 
-PNPM workspaces with Nx for task orchestration, build caching, and project graph awareness. Nx task dependencies ensure `web` builds before `api` serves in production.
+PNPM workspaces with Nx for task orchestration, build caching, and project graph awareness. Nx task dependencies ensure `client` builds before `server` serves in production.
 
 ### Hosting — Railway Hobby
 
@@ -76,9 +76,9 @@ Vercel and Cloudflare Workers were considered but rejected — both push toward 
 
 ## Production Build Pipeline
 
-1. Nx builds `web` (Vite outputs to `apps/web/dist`)
-2. Nx builds `api` (Hono server compiled)
-3. Hono serves `apps/web/dist` as static files
+1. Nx builds `client` (Vite outputs to `apps/client/dist`)
+2. Nx builds `server` (Hono server compiled)
+3. Hono serves `apps/client/dist` as static files
 4. Hono handles all `/api/*` routes
 
 The Nx task dependency graph ensures step 1 always precedes steps 2 and 3.

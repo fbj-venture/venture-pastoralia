@@ -1,5 +1,5 @@
 import {Router, Route} from 'preact-iso'
-import './global.css'
+import './styles/main.css'
 import {Login} from './auth/login'
 import {Dashboard} from './dashboard/dashboard'
 import {QueryClient, QueryClientProvider} from "@tanstack/preact-query"

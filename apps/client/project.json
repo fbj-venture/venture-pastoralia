@@ -1,8 +1,8 @@
 {
-  "name": "api",
+  "name": "client",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/api/src",
+  "sourceRoot": "apps/client/src",
   "targets": {
     "dev": {
       "executor": "nx:run-commands",
@@ -13,7 +13,6 @@
     },
     "build": {
       "executor": "nx:run-commands",
-      "dependsOn": [{ "projects": ["web"], "target": "build" }],
       "options": {
         "command": "pnpm build",
         "cwd": "{projectRoot}"
@@ -22,10 +21,10 @@
       "inputs": ["production", "^production"],
       "outputs": ["{projectRoot}/dist"]
     },
-    "start": {
+    "preview": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "pnpm start",
+        "command": "pnpm preview",
         "cwd": "{projectRoot}"
       }
     }

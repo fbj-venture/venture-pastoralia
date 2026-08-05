@@ -12,7 +12,7 @@ Each layer is production-quality and independently usable before the next layer 
 
 ## Pre-Layer 1 — Foundation
 
-- [x] Monorepo scaffold — PNPM workspaces + Nx, `apps/web`, `apps/api`, `packages/db`, `packages/shared`
+- [x] Monorepo scaffold — PNPM workspaces + Nx, `apps/client`, `apps/server`, `packages/db`, `packages/shared`
 - [x] Vite + Preact frontend with LightningCSS
 - [x] Hono API server
 - [x] Vite proxying to Hono in development

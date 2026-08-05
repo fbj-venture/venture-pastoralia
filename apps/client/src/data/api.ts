@@ -1,5 +1,5 @@
 import {hc} from 'hono/client'
-import type {AppType} from '../../../api/src'
+import type {AppType} from '../../../server/src'
 
 // Module-level token store. Cleared on logout or page refresh.
 // Persistent sessions (survive refresh) can be layered on later via sessionStorage.

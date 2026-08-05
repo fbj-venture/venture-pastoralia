@@ -18,7 +18,7 @@ This is a pastoral care management web application for a church pastor and small
 - **Database:** Supabase (PostgreSQL + Auth + Row Level Security)
 - **Query builder / ORM:** Drizzle ORM with drizzle-kit — server-side only, RLS-preserving
 - **Migrations:** drizzle-kit (schema migrations auto-generated from TypeScript schema; RLS policies, triggers, and functions via `drizzle-kit generate --custom`)
-- **Validation:** Zod 4 — schema definitions in `packages/shared`, consumed by both web and api
+- **Validation:** Zod 4 — schema definitions in `packages/shared`, consumed by both client and server
 - **Forms:** TanStack Form (`@tanstack/preact-form`) — frontend form handling; Zod 4 schemas used directly as validators via Standard Schema (no adapter)
 - **Monorepo:** PNPM workspaces + Nx
 - **Hosting:** Railway (Hobby plan)
@@ -27,11 +27,11 @@ This is a pastoral care management web application for a church pastor and small
 
 ```
 apps/
-  web/          # Vite + Preact frontend with LightningCSS
-  api/          # Hono API server
+  client/       # Vite + Preact frontend with LightningCSS
+  server/       # Hono API server
 packages/
   db/           # Drizzle client, schema definitions, migrations, RLS helper
-  shared/       # Shared TypeScript types consumed by both web and api
+  shared/       # Shared TypeScript types consumed by both client and server
 docs/
   architecture.md
   data-model.md
